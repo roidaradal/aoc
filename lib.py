@@ -1,5 +1,6 @@
 import time, hashlib
 from collections.abc import Callable
+from collections import defaultdict
 
 coords = tuple[int,int]
 delta  = tuple[int,int]
