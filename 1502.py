@@ -3,8 +3,8 @@
 
 from lib import * 
 
-def data(full: bool) -> list[int3]:
-    def convert(line: str) -> int3:
+def data(full: bool) -> list[dims3]:
+    def convert(line: str) -> dims3:
         return tuple(int(x) for x in line.split('x'))
     return [convert(line) for line in readLines(15, 2, full)]
 

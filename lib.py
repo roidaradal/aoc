@@ -4,7 +4,8 @@ from collections import defaultdict
 
 coords = tuple[int,int]
 delta  = tuple[int,int]
-int3   = tuple[int,int,int]
+dims2  = tuple[int,int]
+dims3  = tuple[int,int,int]
 strInt = tuple[str,int]
 
 def do(fn: Callable):
@@ -28,6 +29,11 @@ def move(c: coords, d: delta) -> coords:
     row,col = c 
     dy,dx = d 
     return (row+dy, col+dx)
+
+def insideBounds(c: coords, bounds: dims2) -> bool:
+    row, col = c 
+    numRows, numCols = bounds 
+    return 0 <= row and row < numRows and 0 <= col and col < numCols
 
 def md5Hash(word: str) -> str:
     return hashlib.md5(word.encode('utf-8')).hexdigest()
