@@ -1,4 +1,4 @@
-import time 
+import time, hashlib
 from collections.abc import Callable
 
 coords = tuple[int,int]
@@ -26,3 +26,5 @@ def move(c: coords, d: delta) -> coords:
     dy,dx = d 
     return (row+dy, col+dx)
 
+def md5Hash(word: str) -> str:
+    return hashlib.md5(word.encode('utf-8')).hexdigest()
