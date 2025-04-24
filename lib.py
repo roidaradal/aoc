@@ -1,6 +1,9 @@
 import time 
 from collections.abc import Callable
 
+coords = tuple[int,int]
+delta  = tuple[int,int]
+
 def do(fn: Callable):
     start = time.time()
     fn()
@@ -17,4 +20,9 @@ def readLines(year: int, day: int, full: bool, strip: bool = True) -> list[str]:
     lines = [x.strip() if strip else x for x in f.readlines()]
     f.close()
     return lines
+
+def move(c: coords, d: delta) -> coords:
+    row,col = c 
+    dy,dx = d 
+    return (row+dy, col+dx)
 
