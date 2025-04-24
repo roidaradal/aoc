@@ -3,8 +3,6 @@
 
 from lib import * 
 
-int3 = tuple[int,int,int]
-
 def data(full: bool) -> list[int3]:
     def convert(line: str) -> int3:
         return tuple(int(x) for x in line.split('x'))

@@ -4,6 +4,8 @@ from collections import defaultdict
 
 coords = tuple[int,int]
 delta  = tuple[int,int]
+int3   = tuple[int,int,int]
+strInt = tuple[str,int]
 
 def do(fn: Callable):
     start = time.time()
@@ -29,3 +31,11 @@ def move(c: coords, d: delta) -> coords:
 
 def md5Hash(word: str) -> str:
     return hashlib.md5(word.encode('utf-8')).hexdigest()
+
+U: delta = (-1,0)
+D: delta = (1,0)
+L: delta = (0,-1)
+R: delta = (0,1)
+
+leftOf:  dict[delta,delta] = {U: L, L: D, D: R, R: U}
+rightOf: dict[delta,delta] = {U: R, R: D, D: L, L: U}
