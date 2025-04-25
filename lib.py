@@ -11,6 +11,9 @@ strInt = tuple[str,int]
 def toDims3(line: str, sep: str|None) -> dims3:
     return tuple(int(x) for x in line.split(sep))
 
+def toIntList(line: str, sep: str|None) -> list[int]:
+    return [int(x) for x in line.split(sep)]
+
 def toStrInt(line: str, strLen: int) -> strInt:
     line = line.strip() 
     return (line[:strLen], int(line[strLen:]))
