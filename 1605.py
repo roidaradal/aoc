@@ -7,35 +7,26 @@ def data(full: bool) -> str:
     return readLines(16, 5, full)[0]
 
 def part1():
-    full = True 
-    door = data(full)
-    i = 0
+    door = data(full=True)
+    hashGen = md5HashGenerator(door, '00000', 0)
     pwd = []
     for _ in range(8):
-        while True:
-            key = '%s%d' % (door,i)
-            i += 1
-            hash = md5Hash(key)
-            if hash[:5] == '00000':
-                pwd.append(hash[5])
-                break
+        _, hash = next(hashGen)
+        pwd.append(hash[5])
     print(''.join(pwd))
 
 def part2():
-    full = True 
-    door = data(full)
+    door = data(full=True)
+    hashGen = md5HashGenerator(door, '00000', 0)
     indexes = [str(x) for x in range(8)]
     pwd = ['.'] * 8 
-    i = 0 
     while any(p == '.' for p in pwd): 
-        key = '%s%d' % (door,i)
-        i += 1 
-        hash = md5Hash(key)
-        if hash[:5] == '00000' and hash[5] in indexes:
-            idx = int(hash[5])
-            if pwd[idx] == '.':
-                pwd[idx] = hash[6]
-                print(''.join(pwd))
+        _, hash = next(hashGen)
+        if hash[5] not in indexes: continue
+        idx = int(hash[5])
+        if pwd[idx] == '.':
+            pwd[idx] = hash[6]
+            print(''.join(pwd))
 
 if __name__ == '__main__':
     do(part1)

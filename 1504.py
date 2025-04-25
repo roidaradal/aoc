@@ -3,29 +3,22 @@
 
 from lib import * 
 
-def data(full: bool) -> list[str]:
-    return readLines(15, 4, full)
+def data(full: bool) -> str:
+    return readLines(15, 4, full)[0]
 
 def part1():
-    full = True 
-    for key in data(full):
-        solve(key, 5)
+    key = data(full=True)
+    solve(key, 5)
 
 def part2():
-    full = True 
-    for key in data(full):
-        solve(key, 6)
+    key = data(full=True)
+    solve(key, 6)
 
 def solve(key: str, numZeros: int):
     goal = '0' * numZeros 
-    i = 0 
-    while True:
-        i += 1
-        word = '%s%d' % (key, i)
-        hash = md5Hash(word)
-        if hash[:numZeros] == goal:
-            print(i)
-            break
+    hashGen = md5HashGenerator(key, goal, 1)
+    i,_ = next(hashGen)
+    print(i)
 
 if __name__ == '__main__':
     do(part1)

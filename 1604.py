@@ -13,10 +13,7 @@ class Room:
     
     @property 
     def isReal(self) -> bool:
-        freq = defaultdict(int)
-        for x in self.name:
-            if x == '-': continue 
-            freq[x] += 1
+        freq = charFreq(self.name, skip=['-'])
         freq = sorted((-v,k) for k,v in freq.items())
         if len(freq) < 5: 
             return False 
@@ -33,17 +30,15 @@ def data(full: bool) -> list[Room]:
     return [Room(line) for line in readLines(16, 4, full)]
 
 def part1():
-    full = True 
-    total = 0 
-    for room in data(full):
-        if room.isReal:
-            total += room.id 
+    rooms = data(full=True)
+    fn = lambda room: room.id if room.isReal else 0 
+    total = getTotal(rooms, fn)
     print(total) 
 
 def part2():
-    full = True 
+    rooms = data(full=True)
     goal = 'northpole-object-storage'
-    for room in data(full):
+    for room in rooms:
         if room.decrypt() == goal:
             print(room.id)
             break

@@ -4,38 +4,29 @@
 from lib import * 
 
 T: dict[str,delta] = {
-    '>' : (0,1),
-    '<' : (0,-1),
-    '^' : (1,0),
-    'v' : (-1,0),
+    '>' : R,
+    '<' : L,
+    '^' : U,
+    'v' : D,
 }
 
-def data(full: bool) -> list[list[delta]]:
-    def convert(line: str) -> list[delta]:
-        return [T[x] for x in line]
-    return [convert(line) for line in readLines(15, 3, full)]
+def data(full: bool) -> list[delta]:
+    line = readLines(15, 3, full)[0]
+    return [T[x] for x in line]
 
 def part1():
-    full = True 
-    for moves in data(full):
-        curr = (0,0)
-        visited = set([curr])
-        for d in moves:
-            curr = move(curr, d)
-            visited.add(curr)
-        print(len(visited))
+    moves = data(full=True)
+    _, visited = walk(moves)
+    print(len(visited))
 
 def part2():
-    full = True 
-    for moves in data(full):
-        santa, robo = (0,0), (0,0)
-        visited = set([santa])
-        for i in range(0, len(moves)-1, 2):
-            santa = move(santa, moves[i])
-            robo  = move(robo,  moves[i+1])
-            visited.add(santa)
-            visited.add(robo)
-        print(len(visited))
+    moves = data(full=True)
+    m = len(moves)
+    _, visited1 = walk(moves[0:m-1:2])  # Santa = Even
+    _, visited2 = walk(moves[1:m:2])    # Robo  = Odd
+    v1 = set(visited1.keys())
+    v2 = set(visited2.keys())
+    print(len(v1.union(v2)))
 
 if __name__ == '__main__':
     do(part1)
@@ -45,8 +36,8 @@ if __name__ == '__main__':
 Data:
 - Translate < left  (0,-1)
 - Translate > right (0,1)
-- Translate ^ up    (1,0)
-- Translate v down  (-1,0)
+- Translate ^ up    (-1,0)
+- Translate v down  (1,0)
 
 Part1:
 - Start at (0,0)
@@ -56,5 +47,6 @@ Part1:
 Part2:
 - Similar processing to Part 1
 - Separate coords for santa and robo 
-- Process moves in pairs: one for santa, one for robo
+- Even moves for santa, odd moves for robo
+- Get union of santa and robo's visited
 '''

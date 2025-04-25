@@ -3,38 +3,21 @@
 
 from lib import * 
 
-def data(full: bool) -> list[list[strInt]]:
-    def convert(line: str) -> list[strInt]:
-        moves: list[strInt] = []
-        for x in line.split(','):
-            x = x.strip() 
-            moves.append((x[0], int(x[1:])))
-        return moves 
-    return [convert(line) for line in readLines(16, 1, full)]
+def data(full: bool) -> list[strInt]:
+    line = readLines(16, 1, full)[0]
+    return [toStrInt(x, 1) for x in line.split(',')]
 
 def part1():
-    full = True 
-    for moves in data(full):
-        curr = (0, 0)
-        d: delta|None = None 
-        for turn, steps in moves:
-            if d is None:
-                d = L if turn == 'L' else R 
-            elif turn == 'L':
-                d = leftOf[d]
-            elif turn == 'R':
-                d = rightOf[d]
-            for _ in range(steps):
-                curr = move(curr, d)
-        print(sum(abs(x) for x in curr))
+    moves = data(full=True)
+    hq = findHQ(moves, False)
+    print(manhattan(hq))
 
 def part2():
-    full = True 
-    for moves in data(full):
-        end = walk(moves)
-        print(sum(abs(x) for x in end))
+    moves = data(full=True)
+    hq = findHQ(moves, True)
+    print(manhattan(hq))
 
-def walk(moves: list[strInt]) -> coords:
+def findHQ(moves: list[strInt], atVisitedTwice: bool) -> coords:
     curr = (0, 0)
     d: delta|None = None 
     visited = set()
@@ -47,10 +30,10 @@ def walk(moves: list[strInt]) -> coords:
             d = rightOf[d]
         for _ in range(steps):
             curr = move(curr, d)
-            if curr in visited:
-                # first coords that's visited twice
+            if atVisitedTwice and curr in visited:
                 return curr 
             visited.add(curr)
+    return curr
 
 
 if __name__ == '__main__':

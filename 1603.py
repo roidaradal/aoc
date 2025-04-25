@@ -4,24 +4,17 @@
 from lib import * 
 
 def data(full: bool) -> list[dims3]:
-    def convert(line: str) -> dims3:
-        return tuple(int(x) for x in line.split())
-    return [convert(line) for line in readLines(16, 3, full)]
+    fn = lambda line: toDims3(line, None)
+    return [fn(line) for line in readLines(16, 3, full)]
 
 def part1():
-    full = True 
-    count = 0 
-    for triple in data(full):
-        if isValid(triple):
-            count += 1 
+    triples = data(full=True)
+    count = countValid(triples, isValid)
     print(count)
 
 def part2():
-    full = True 
-    count = 0 
-    for triple in readVertical(data(full)):
-        if isValid(triple):
-            count += 1
+    triples = readVertical(data(full=True))
+    count = countValid(triples, isValid)
     print(count) 
 
 def isValid(triple: dims3) -> bool:

@@ -3,33 +3,31 @@
 
 from lib import * 
 
-def data(full: bool) -> list[str]:
-    return readLines(15, 1, full)
+T: dict[str,int] = {
+    '(' : 1,
+    ')' : -1,
+}
+
+def data(full: bool) -> str:
+    return readLines(15, 1, full)[0]
 
 def part1():
-    full = True 
-    for line in data(full):
-        level = 0
-        for x in line: 
-            if x == '(': 
-                level += 1
-            elif x == ')':
-                level -= 1
-        print(level)
+    line = data(full=True)
+    level = process(line, None)
+    print(level)
 
 def part2():
-    full = True 
-    basement = -1
-    for line in data(full):
-        level = 0 
-        for i,x in enumerate(line):
-            if x == '(':
-                level += 1 
-            elif x == ')':
-                level -= 1
-            if level == basement:
-                print(i+1)
-                break
+    line = data(full=True)
+    level = process(line, -1)
+    print(level)
+
+def process(line: str, goal: int|None) -> int:
+    level = 0
+    for i,x in enumerate(line):
+        level += T[x]
+        if level == goal:
+            return i+1
+    return level
 
 
 if __name__ == '__main__':

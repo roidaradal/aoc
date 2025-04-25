@@ -9,36 +9,42 @@ def data(full: bool) -> list[str]:
     return readLines(16, 2, full)
 
 def part1():
-    full = True 
-    pad = ['123','456','789']
-    curr, bounds = (1,1), (3,3)
-    code = []
-    for moves in data(full):
-        for m in moves:
-            nxt = move(curr, T[m])
-            if insideBounds(nxt, bounds):
-                curr = nxt 
-        row,col = curr 
-        code.append(pad[row][col])
-    print(''.join(code))
+    cfg = Config()
+    cfg.pad = ['123','456','789']
+    cfg.start = (1,1)
+    cfg.boundsCheck = lambda c: insideBounds(c, (3,3))
+    
+    movesList = data(full=True)
+    code = solveCode(cfg, movesList)
+    print(code)
 
 def part2():
-    full = True 
-    pad = ['00100','02340','56789','0ABC0','00D00']
-    curr, bounds = (2,0), (5,5)
+    cfg = Config()
+    cfg.pad = ['00100','02340','56789','0ABC0','00D00']
+    cfg.start = (2,0)
+    cfg.boundsCheck = lambda c: insideBounds(c, (5,5)) and cfg.pad[c[0]][c[1]] != '0'
+
+    movesList = data(full=True)
+    code = solveCode(cfg, movesList)
+    print(code)
+
+class Config:
+    def __init__(self):
+        self.pad: list[str] = []
+        self.start: coords = (0,0)
+        self.boundsCheck: Callable = None
+
+def solveCode(cfg: Config, movesList: list[str]) -> str:
     code = []
-    for moves in data(full):
+    curr = cfg.start
+    for moves in movesList:
         for m in moves:
             nxt = move(curr, T[m])
-            if insideDiamond(nxt, bounds, pad):
+            if cfg.boundsCheck(nxt):
                 curr = nxt 
         row,col = curr 
-        code.append(pad[row][col])
-    print(''.join(code))
-
-def insideDiamond(c: coords, bounds: dims2, pad: list[str]) -> bool:
-    row, col = c 
-    return insideBounds(c, bounds) and pad[row][col] != '0'
+        code.append(cfg.pad[row][col])
+    return ''.join(code)
 
 
 if __name__ == '__main__':
@@ -54,7 +60,8 @@ Part1:
 - Combine all code results
 
 Part2:
+- Diamond pad has '0' chars in grid to represent outside of pad
 - Similar processing to Part 1 
 - Start at (2,0) = "5" position in diamond pad 
-- insideDiamond: check if insideBounds and coords' mapped character in pad is not '0'
+- boundsCheck: check if insideBounds and coords' mapped character in pad is not '0'
 '''

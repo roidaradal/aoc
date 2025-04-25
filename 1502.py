@@ -4,24 +4,26 @@
 from lib import * 
 
 def data(full: bool) -> list[dims3]:
-    def convert(line: str) -> dims3:
-        return tuple(int(x) for x in line.split('x'))
-    return [convert(line) for line in readLines(15, 2, full)]
+    fn = lambda line: toDims3(line, 'x')
+    return [fn(line) for line in readLines(15, 2, full)]
 
 def part1():
-    full = True 
-    total = 0 
-    for l,w,h in data(full):
+    def fn(dims: dims3) -> int:
+        l,w,h = dims 
         lw, wh, lh = l*w, w*h, l*h 
-        total += (2*lw) + (2*wh) + (2*lh) + min(lw,wh,lh)
+        return (2*lw) + (2*wh) + (2*lh) + min(lw,wh,lh)
+    
+    items = data(full=True)
+    total = getTotal(items, fn)
     print(total)
 
 def part2():
-    full = True 
-    total = 0 
-    for dims in data(full):
-        d1, d2, d3 = sorted(dims)
-        total += (2 * (d1+d2)) + (d1*d2*d3)
+    def fn(dims: dims3) -> int:
+        d1, d2, d3 = sorted(dims) 
+        return (2 * (d1+d2)) + (d1*d2*d3)
+    
+    items = data(full=True)
+    total = getTotal(items, fn)
     print(total)
 
 
