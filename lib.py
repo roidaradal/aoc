@@ -105,6 +105,14 @@ def countValid(items: list, fn: Callable) -> int:
             count += 1 
     return count
 
+def surround8(c: coords) -> list[coords]:
+    row,col = c 
+    return [
+        (row-1,col-1), (row-1,col-0), (row-1,col+1),
+        (row-0,col-1),                (row-0,col+1),
+        (row+1,col-1), (row+1,col-0), (row+1,col+1),
+    ]
+
 U: delta = (-1,0)
 D: delta = (1,0)
 L: delta = (0,-1)
