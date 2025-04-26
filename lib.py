@@ -92,6 +92,15 @@ def substringPositions(word: str, length: int) -> defaultdict[str,list[int]]:
         at[sub].append(i)
     return at
 
+# Return list of index where word1 and word2 differs
+# Assumes word1 and word2 have same length
+def strDiff(word1: str, word2: str) -> list[int]:
+    diff = []
+    for i in range(len(word1)):
+        if word1[i] != word2[i]:
+            diff.append(i)
+    return diff
+
 def manhattan(c: coords) -> int:
     return sum(abs(x) for x in c)
 
