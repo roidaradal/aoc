@@ -1,6 +1,7 @@
 import time, hashlib
 from collections.abc import Callable, Iterator
 from collections import defaultdict
+from typing import Any
 
 coords = tuple[int,int]
 delta  = tuple[int,int]
@@ -20,6 +21,9 @@ def toStrInt(line: str, strLen: int) -> strInt:
 
 def sortedStr(word: str) -> str: 
     return ''.join(sorted(word))
+
+def splitStr(word: str, sep: str) -> list[str]:
+    return [x.strip() for x in word.split(sep)]
 
 def do(fn: Callable):
     start = time.time()
@@ -124,6 +128,10 @@ def surround8(c: coords) -> list[coords]:
         (row-0,col-1),                (row-0,col+1),
         (row+1,col-1), (row+1,col-0), (row+1,col+1),
     ]
+
+def createGrid(initial: Any, numRows: int, numCols: int) -> list[list]:
+    return [[initial for _ in range(numCols)] for _ in range(numRows)]
+
 
 U: delta = (-1,0)
 D: delta = (1,0)
