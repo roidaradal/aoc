@@ -18,6 +18,9 @@ def toStrInt(line: str, strLen: int) -> strInt:
     line = line.strip() 
     return (line[:strLen], int(line[strLen:]))
 
+def sortedStr(word: str) -> str: 
+    return ''.join(sorted(word))
+
 def do(fn: Callable):
     start = time.time()
     fn()
