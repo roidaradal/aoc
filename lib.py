@@ -12,6 +12,9 @@ strInt = tuple[str,int]
 def toDims3(line: str, sep: str|None) -> dims3:
     return tuple(int(x) for x in line.split(sep))
 
+def toDims2(line: str, sep: str|None) -> dims2:
+    return tuple(int(x) for x in line.split(sep))
+
 def toIntList(line: str, sep: str|None) -> list[int]:
     return [int(x) for x in line.split(sep)]
 
@@ -95,6 +98,19 @@ def substringPositions(word: str, length: int) -> defaultdict[str,list[int]]:
         sub = word[i:i+length]
         at[sub].append(i)
     return at
+
+def groupChunks(word: str) -> list[str]:
+    chunks = []
+    curr, count = word[0], 1
+    for i in range(1, len(word)):
+        char = word[i]
+        if char == curr: 
+            count += 1
+        else: 
+            chunks.append(curr * count) # repeat string 
+            curr, count = char, 1 
+    chunks.append(curr * count)
+    return chunks
 
 # Return list of index where word1 and word2 differs
 # Assumes word1 and word2 have same length
