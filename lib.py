@@ -5,6 +5,7 @@ from typing import Any
 
 coords = tuple[int,int]
 delta  = tuple[int,int]
+int2   = tuple[int,int]
 dims2  = tuple[int,int]
 dims3  = tuple[int,int,int]
 strInt = tuple[str,int]
@@ -13,6 +14,9 @@ def toDims3(line: str, sep: str|None) -> dims3:
     return tuple(int(x) for x in line.split(sep))
 
 def toDims2(line: str, sep: str|None) -> dims2:
+    return tuple(int(x) for x in line.split(sep))
+
+def toInt2(line: str, sep: str|None) -> int2:
     return tuple(int(x) for x in line.split(sep))
 
 def toIntList(line: str, sep: str|None) -> list[int]:
