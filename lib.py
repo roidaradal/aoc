@@ -68,6 +68,9 @@ def walk(moves: list[delta], start: coords = (0,0),  visitStart: bool = True) ->
         visited[curr] += 1 
     return (curr, visited)
 
+def getBounds(grid: list) -> dims2:
+    return (len(grid), len(grid[0]))
+
 def insideBounds(c: coords, bounds: dims2) -> bool:
     row, col = c 
     numRows, numCols = bounds 
