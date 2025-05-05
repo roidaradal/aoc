@@ -103,6 +103,12 @@ def charFreq(word: str, skip: list|None = None) -> defaultdict[str,int]:
         freq[char] += 1
     return freq
 
+def countFreq(items: list) -> dict:
+    freq = defaultdict(int)
+    for item in items:
+        freq[item] += 1
+    return freq
+
 def substringPositions(word: str, length: int) -> defaultdict[str,list[int]]:
     at = defaultdict(list)
     for i in range(len(word)-(length-1)):
