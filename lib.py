@@ -10,6 +10,7 @@ dims2  = tuple[int,int]
 dims3  = tuple[int,int,int]
 int3   = tuple[int,int,int]
 strInt = tuple[str,int]
+vector = tuple[coords,delta]
 
 def toDims3(line: str, sep: str|None) -> dims3:
     return tuple(int(x) for x in line.split(sep))
@@ -58,6 +59,10 @@ def move(c: coords, d: delta) -> coords:
     dy,dx = d 
     return (row+dy, col+dx)
 
+def getDelta(c1: coords, c2: coords) -> delta:
+    (y1,x1), (y2,x2) = c1, c2 
+    return (y2-y1, x2-x1)
+
 # Returns ending position and set of visited coords (with frequency of visit)
 def walk(moves: list[delta], start: coords = (0,0),  visitStart: bool = True) -> tuple[coords,dict[coords,int]]:
     visited = defaultdict(int)
@@ -71,10 +76,11 @@ def walk(moves: list[delta], start: coords = (0,0),  visitStart: bool = True) ->
 def getBounds(grid: list) -> dims2:
     return (len(grid), len(grid[0]))
 
-def insideBounds(c: coords, bounds: dims2) -> bool:
+def insideBounds(c: coords, maxBounds: dims2, minBounds: dims2 = (0,0)) -> bool:
     row, col = c 
-    numRows, numCols = bounds 
-    return 0 <= row and row < numRows and 0 <= col and col < numCols
+    minRows, minCols = minBounds
+    numRows, numCols = maxBounds 
+    return minRows <= row < numRows and minCols <= col < numCols
 
 def md5Hash(word: str) -> str:
     return hashlib.md5(word.encode('utf-8')).hexdigest()
