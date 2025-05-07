@@ -171,6 +171,8 @@ def surround8(c: coords) -> list[coords]:
 def createGrid(initial: Any, numRows: int, numCols: int) -> list[list]:
     return [[initial for _ in range(numCols)] for _ in range(numRows)]
 
+def tryParseInt(x: str) -> int|str:
+    return int(x) if x.isdigit() else x
 
 U: delta = (-1,0)
 D: delta = (1,0)
