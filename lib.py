@@ -12,6 +12,13 @@ int3   = tuple[int,int,int]
 strInt = tuple[str,int]
 vector = tuple[coords,delta]
 
+edgeMap = dict[tuple[str,str], int]
+
+class Graph:
+    def __init__(self):
+        self.vertices = set()
+        self.edges = {}
+
 def toDims3(line: str, sep: str|None) -> dims3:
     return tuple(int(x) for x in line.split(sep))
 
